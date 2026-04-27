@@ -5,14 +5,16 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class DosenController
+class JurusanController
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+         return view('jurusan.index', [
+            'jurusan' => Jurusan::all()
+        ]);
     }
 
     /**
@@ -20,7 +22,7 @@ class DosenController
      */
     public function create()
     {
-        //
+         return view('jurusan.create');
     }
 
     /**
@@ -28,7 +30,11 @@ class DosenController
      */
     public function store(Request $request)
     {
-        //
+        $data = $request->except('_token');
+
+        Jurusan::create($data);
+
+        return redirect()->action([JurusanController::class, 'index']);
     }
 
     /**
@@ -36,7 +42,7 @@ class DosenController
      */
     public function show(string $id)
     {
-        //
+        return Jurusan::find($id);
     }
 
     /**
@@ -44,7 +50,9 @@ class DosenController
      */
     public function edit(string $id)
     {
-        //
+        return view('jurusan.edit', [
+            'jurusan' => Jurusan::find($id)
+        ]);
     }
 
     /**
@@ -52,7 +60,11 @@ class DosenController
      */
     public function update(Request $request, string $id)
     {
-        //
+         $data = $request->except('_token');
+
+        Jurusan::find($id)->update($data);
+
+        return redirect()->action([JurusanController::class, 'index']);
     }
 
     /**
@@ -60,6 +72,8 @@ class DosenController
      */
     public function destroy(string $id)
     {
-        //
+        Jurusan::find($id)->delete();
+
+        return redirect()->action([JurusanController::class, 'index']);
     }
 }
